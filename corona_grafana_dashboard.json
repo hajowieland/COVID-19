@@ -747,7 +747,7 @@
       "esMetric": "metric",
       "gridPos": {
         "h": 10,
-        "w": 12,
+        "w": 8,
         "x": 0,
         "y": 4
       },
@@ -849,8 +849,8 @@
       "esMetric": "Count",
       "gridPos": {
         "h": 10,
-        "w": 12,
-        "x": 12,
+        "w": 8,
+        "x": 8,
         "y": 4
       },
       "hideEmpty": false,
@@ -936,6 +936,102 @@
       "unitPlural": "deaths",
       "unitSingle": "",
       "unitSingular": "death",
+      "valueName": "current"
+    },
+    {
+      "circleMaxSize": "15",
+      "circleMinSize": "1",
+      "colors": [
+        "#37872D",
+        "rgba(237, 129, 40, 0.89)",
+        "#C4162A"
+      ],
+      "datasource": "InfluxDB",
+      "decimals": 0,
+      "esMetric": "Count",
+      "gridPos": {
+        "h": 10,
+        "w": 8,
+        "x": 16,
+        "y": 4
+      },
+      "hideEmpty": false,
+      "hideZero": false,
+      "id": 31,
+      "initialZoom": "1",
+      "jsonUrl": "http://localhost:5000/locations",
+      "locationData": "countries_3letter",
+      "mapCenter": "Europe",
+      "mapCenterLatitude": 46,
+      "mapCenterLongitude": 14,
+      "maxDataPoints": 1,
+      "mouseWheelZoom": false,
+      "options": {},
+      "showLegend": false,
+      "stickyLabels": true,
+      "tableQueryOptions": {
+        "geohashField": "geohash",
+        "labelField": "country",
+        "latitudeField": "lat",
+        "longitudeField": "long",
+        "metricField": "metric",
+        "queryType": "coordinates"
+      },
+      "targets": [
+        {
+          "alias": "$tag_isocode",
+          "groupBy": [
+            {
+              "params": [
+                "72h"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "isocode"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "CoronaNew",
+          "orderByTime": "ASC",
+          "policy": "covid19\".\"autogen",
+          "query": "SELECT last(\"Deaths\") AS \"metric\" FROM \"autogen\".\"Corona\" WHERE $timeFilter GROUP BY time(24h), \"country\", \"lat\", \"long\"",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "Recovered"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "metric"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": "1,5",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Deaths",
+      "type": "grafana-worldmap-panel",
+      "unitPlural": "Recovered",
+      "unitSingle": "",
+      "unitSingular": "Recovered",
       "valueName": "current"
     },
     {
@@ -1763,6 +1859,7 @@
       },
       "lines": true,
       "linewidth": 2,
+      "links": [],
       "nullPointMode": "connected",
       "options": {
         "dataLinks": []
@@ -3869,7 +3966,7 @@
   },
   "time": {
     "from": "2020-01-27T10:03:19.657Z",
-    "to": "2020-04-02T09:03:19.667Z"
+    "to": "2020-04-05T21:03:19.000Z"
   },
   "timepicker": {
     "refresh_intervals": [
